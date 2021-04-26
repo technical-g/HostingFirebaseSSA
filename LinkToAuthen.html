@@ -100,13 +100,13 @@
 	function RedeemToken(){
 		var myHeaders = new Headers();
 		myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-		myHeaders.append("Cookie", "buid=0.ATMADQSIkWdsW0yxEjajBLZtreeuc4T7scpDkHitz2OTUGEzAAA.AQABAAEAAAD--DLA3VO7QrddgJg7WevrTnZPyDDIjdRJQ4lqPhipI8d80lS8x7CdyLQJqj96DNGGh5kLKgftE7rXTyaIbuW2N_Cuej8vMtodEeVCU3K-BsIxl6zlQm44VQePRtl73pcgAA; fpc=AnsaasFNohZDkp5tbZUbd60; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd");
+		//myHeaders.append("Cookie", "buid=0.ATMADQSIkWdsW0yxEjajBLZtreeuc4T7scpDkHitz2OTUGEzAAA.AQABAAEAAAD--DLA3VO7QrddgJg7WevrTnZPyDDIjdRJQ4lqPhipI8d80lS8x7CdyLQJqj96DNGGh5kLKgftE7rXTyaIbuW2N_Cuej8vMtodEeVCU3K-BsIxl6zlQm44VQePRtl73pcgAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd; fpc=AnsaasFNohZDkp5tbZUbd63yZnK2AgAAAKCBGNgOAAAA");
 
 		var urlencoded = new URLSearchParams();
-		urlencoded.append("client_id", clientApp);
-		urlencoded.append("redirect_uri", redirectUrl);
-		urlencoded.append("client_secret", clientSecret);
-		urlencoded.append("code", codeForStep2 );
+		urlencoded.append("client_id", "8473aee7-b1fb-43ca-9078-adcf63935061");
+		urlencoded.append("redirect_uri", "https://searchfileapplication.web.app/LinkToAuthen.html");
+		urlencoded.append("client_secret", "Y.A~~~Vngf2uoT35l1chbt968~FYx3z9Qv");
+		urlencoded.append("code", codeForStep2);
 		urlencoded.append("grant_type", "authorization_code");
 
 		var requestOptions = {
