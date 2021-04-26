@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Connect OneDrive Through API</title>
+
+
+</head>
+<body>
+	<p id="displayValue"> </p>
+	
+	<button onClick="TestAuthenOneDrive()">Authen Through API</button>
+
+	<p id="displayResponse"> w </p>
+
+
+</body>
+
+
+
+<script type="text/javascript">
+
+	function TestAuthenOneDrive(){
+
+		var ClientApplication = "8473aee7-b1fb-43ca-9078-adcf63935061";
+		var scope = "onedrive.readwrite";
+		var responseType = "token";
+		var redirectUri = "https://searchfileapplication.web.app/ConnectOneDrive.html";
+
+
+
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function() {
+		  if(this.readyState === 4) {
+		    console.log(this.responseText);
+		  }
+		});
+
+		xhr.open("GET", "https://login.live.com/oauth20_authorize.srf?client_id=8473aee7-b1fb-43ca-9078-adcf63935061&scope=onedrive.readwrite%20offline_access&response_type=token&redirect_uri=https://searchfileapplication.web.app");
+		xhr.setRequestHeader("Cookie", "MSCC=49.49.240.144-TH");
+		//xhr.setRequestHeader('Authorization', 'Bearer access_token_value');
+
+		xhr.send();
+
+
+		/*fetch('https://login.live.com/oauth20_authorize.srf?client_id='+ ClientApplication + '&scope=' + scope + '&response_type=' + responseType + '&redirect_uri=' + redirectUri) 
+		.then(response => {
+			console.log('response');
+			return response.json(); // แปลงข้อมูลที่ได้เป็น json
+		})*/
+		
+
+		/*const userAction = async () => {
+		  	const response = await fetch('https://login.live.com/oauth20_authorize.srf?client_id='+ ClientApplication + '&scope=' + scope + '&response_type=' + responseType + '&redirect_uri=' + redirectUri);
+			const myJson = await response.json();
+		  	 //extract JSON from the http response
+		  	var obj = JSON.parse(myJson);
+		  	var display = Object.values(obj);
+		  	var checknull = obj.value[0];
+
+		  	console.log('Working');
+
+		  	if(checknull.length ==0) {
+		  		console.log('null');
+		  	}else{
+		  		console.log('not null');
+		  	}
+		  	document.getElementById("displayResponse").innerHTML = display ;
+		}*/
+
+		console.log('function');
+
+		var LinkDisplay = 'https://login.live.com/oauth20_authorize.srf?client_id='+ ClientApplication + '&scope=' + scope + '&response_type=' + responseType + '&redirect_uri=' + redirectUri;
+		document.getElementById("displayValue").innerHTML = LinkDisplay ;
+	}
+	
+
+</script>
+
+
+</html>
+

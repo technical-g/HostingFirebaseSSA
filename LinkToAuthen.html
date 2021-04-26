@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Link To Authentication </title>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+	    
+	 
+	    $( window ).on( "load", function() {
+	        console.log( "window loaded" );
+	    });
+    </script>
+</head>
+<body>
+
+	<div id= "Step1">
+			<!--Step1 Button-->
+		<a href="https://login.live.com/oauth20_authorize.srf?client_id=8473aee7-b1fb-43ca-9078-adcf63935061&scope=onedrive.readwrite%20offline_access&response_type=token&redirect_uri=https://searchfileapplication.web.app/LinkToAuthen.html">Step1: Authentication</a>
+
+		<br>
+
+		<!--Display Value-->
+		<button onclick="DisplayValue()"> Display Value</button>
+
+		<!--	-->
+		<p id="ResponseMsg"></p>
+
+		<!--Display Each Value-->
+		<div id="DisplayDetiail">
+			<p id="access_token"><strong>access_token:</strong> </p> <br>
+			<p id="token_type"><strong>token_type:</strong> </p> <br>
+			<p id="expires_in"><strong>expires_in:</strong> </p> <br>
+			<p id="authentication_token"><strong>authentication_token:</strong> </p> <br>
+			<p id="user_id"><strong>user_id:</strong> </p> <br>
+
+		</div>
+
+	</div>
+
+	<!--Step2 -->
+	
+
+
+</body>
+
+<script type="text/javascript">
+	
+	function DisplayValue(){
+
+	    
+		var hash = window.location.hash.substring(1);
+		//Display all Hash Value
+		document.getElementById("ResponseMsg").innerHTML = hash;
+
+	    var params = {}
+	    hash.split('&').map(hk => { 
+	      let temp = hk.split('='); 
+	        params[temp[0]] = temp[1] 
+	    });
+	    console.log(params);
+
+	    document.getElementById("access_token").innerHTML += params.access_token;
+	    document.getElementById("token_type").innerHTML += params.token_type;
+	    document.getElementById("expires_in").innerHTML += params.expires_in;
+	    document.getElementById("authentication_token").innerHTML += params.authentication_token;
+	    document.getElementById("user_id").innerHTML += params.user_id;
+
+/*
+	    var div = document.getElementById('divID');
+		div.innerHTML += 'Extra stuff';*/
+
+
+
+	}
+
+</script>
+</html>

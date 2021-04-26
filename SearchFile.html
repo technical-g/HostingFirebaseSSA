@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Search File</title>
+	</head>
+
+	<body>
+		<h1>STD search function </h1>
+		<p></p>
+
+		<table>
+			<tr>
+				<th>Team No.</th>
+				<th>Team Name</th>
+				<th><button onclick="myFunction(document.getElementById('TeamNo').value, document.getElementById('TeamName').value)" > Search </button></th>
+				<th><button> Export </button></th>
+			</tr>
+
+			<tr>
+				<td> <input id = "TeamNo" name = "TeamNo" type="text" > </td>
+				<td> <input id = "TeamName" name = "TeamName" type="text"> </td>
+			</tr>
+		</table>
+
+		<p id = "GG"> Team </p>
+
+		<div id = "message">
+	    	<!--Button to Lanch the File Picker-->
+			<button onClick="launchOneDrivePicker()">Open from OneDrive through FilePickerSDK</button>
+
+			<p id = "ResponseMsg"> </p>
+
+	    </div>
+
+
+	</body>
+
+	<!-- import My javascript -->
+	<script src="home.js" type="text/javascript"></script>
+
+	<!-- Add Reference to the SDK -->
+	<script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+
+	<!-- Launch the File Picker -->
+	<script type="text/javascript">
+
+
+		function launchOneDrivePicker(){
+
+			var ValueLocal = this;
+
+			var odOptions = {
+			  	clientId: "8473aee7-b1fb-43ca-9078-adcf63935061",
+			  	action: "query",
+			 	multiSelect: false,
+			  	advanced: {
+			  		queryParameters: "select=id,name,size,file,folder,photo,@microsoft.graph.downloadUrl", //size,file,folder,photo,@microsoft.graph.downloadUrl
+    				//filter: "folder,.png" /* display folder and files with extension '.png' only */
+    				/* Request a read-write scope for the access token */
+                	scopes: ["Files.ReadWrite"]
+			  	},
+			  	success: function(files) {
+
+			  		ValueLocal.accessToken = files.accessToken;
+
+			  		var selectedFile = files.value[0];
+			  		var display = Object.values(selectedFile);
+
+			  		if(selectedFile.length == 0 ){
+			  			console.log('Null File ja');
+			  		}else{
+			  			console.log('Not Null File ja');
+			  		}
+
+			  		document.getElementById("ResponseMsg").innerHTML = display ;
+
+			  	},
+			  	cancel: function() { 
+			  		document.getElementById("ResponseMsg").innerHTML = "cancel";
+			  	},
+			  	error: function(error) { 
+			  		document.getElementById("ResponseMsg").innerHTML = "error";
+			  	}
+			}
+
+		    OneDrive.open(odOptions);
+		}
+	</script>
+
+
+
+
+</html>
