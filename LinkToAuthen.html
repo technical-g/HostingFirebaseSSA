@@ -29,29 +29,38 @@
 		<p id="ResponseMsg"></p>
 
 		<!--Display Each Value-->
-		<div id="DisplayDetiail">
+		<div id="DisplayDetial">
 			<p id="access_token"><strong>access_token:</strong> </p> <br>
 			<p id="token_type"><strong>token_type:</strong> </p> <br>
 			<p id="expires_in"><strong>expires_in:</strong> </p> <br>
 			<p id="authentication_token"><strong>authentication_token:</strong> </p> <br>
 			<p id="user_id"><strong>user_id:</strong> </p> <br>
+			<p id="code"><strong>code:</strong> </p>
 
 		</div>
 
 	</div>
 
 	<!--Step2 -->
+
+	Step 2 : Get access token
+	<button onclick="RedeemToken()"> Click here step2</button>
 	
 
 
 </body>
 
 <script type="text/javascript">
+
+	var codeForStep2;
+	var clientApp = "8473aee7-b1fb-43ca-9078-adcf63935061";
+	var clientSecret = "Y.A~~~Vngf2uoT35l1chbt968~FYx3z9Qv";
+	var redirectUrl = "https://searchfileapplication.web.app/LinkToAuthen.html";
 	
 	function DisplayValue(){
-
 	    
 		var hash = window.location.hash.substring(1);
+		var searchValue = window.location.search.substring(1) ;
 		//Display all Hash Value
 		document.getElementById("ResponseMsg").innerHTML = hash;
 
@@ -61,6 +70,7 @@
 	        params[temp[0]] = temp[1] 
 	    });
 	    console.log(params);
+	    
 
 	    document.getElementById("access_token").innerHTML += params.access_token;
 	    document.getElementById("token_type").innerHTML += params.token_type;
@@ -68,12 +78,48 @@
 	    document.getElementById("authentication_token").innerHTML += params.authentication_token;
 	    document.getElementById("user_id").innerHTML += params.user_id;
 
+
+	    console.log(searchValue);
+
+	    var searchCode = {}
+	    searchValue.split('&').map(hk => { 
+	      let temp = hk.split('='); 
+	        searchCode[temp[0]] = temp[1] 
+	    });
+	    console.log(searchCode);
+	    document.getElementById("code").innerHTML += searchCode.code;
+
+	    codeForStep2 = searchCode.code;
+
 /*
 	    var div = document.getElementById('divID');
 		div.innerHTML += 'Extra stuff';*/
 
+	}
 
+	function RedeemToken(){
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+		myHeaders.append("Cookie", "buid=0.ATMADQSIkWdsW0yxEjajBLZtreeuc4T7scpDkHitz2OTUGEzAAA.AQABAAEAAAD--DLA3VO7QrddgJg7WevrTnZPyDDIjdRJQ4lqPhipI8d80lS8x7CdyLQJqj96DNGGh5kLKgftE7rXTyaIbuW2N_Cuej8vMtodEeVCU3K-BsIxl6zlQm44VQePRtl73pcgAA; fpc=AnsaasFNohZDkp5tbZUbd60; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd");
 
+		var urlencoded = new URLSearchParams();
+		urlencoded.append("client_id", clientApp);
+		urlencoded.append("redirect_uri", redirectUrl);
+		urlencoded.append("client_secret", clientSecret);
+		urlencoded.append("code", codeForStep2 );
+		urlencoded.append("grant_type", "authorization_code");
+
+		var requestOptions = {
+		  method: 'POST',
+		  headers: myHeaders,
+		  body: urlencoded,
+		  redirect: 'follow'
+		};
+
+		fetch("https://login.microsoftonline.com/common/oauth2/v2.0/token", requestOptions)
+		  .then(response => response.text())
+		  .then(result => console.log(result))
+		  .catch(error => console.log('error', error));
 	}
 
 </script>
