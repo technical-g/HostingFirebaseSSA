@@ -99,7 +99,13 @@
 
 	function RedeemToken(){
 		var myHeaders = new Headers();
+		myHeaders.append("Access-Control-Allow-Origin", "*");
+		myHeaders.append("Access-Control-Allow-Methods", "POST");
+		myHeaders.append("Access-Control-Allow-Headers", "Content-Type");
+		myHeaders.append("Access-Control-Max-Age", "3600");
 		myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+		//Access-Control-Allow-Origin: *
 		//myHeaders.append("Cookie", "buid=0.ATMADQSIkWdsW0yxEjajBLZtreeuc4T7scpDkHitz2OTUGEzAAA.AQABAAEAAAD--DLA3VO7QrddgJg7WevrTnZPyDDIjdRJQ4lqPhipI8d80lS8x7CdyLQJqj96DNGGh5kLKgftE7rXTyaIbuW2N_Cuej8vMtodEeVCU3K-BsIxl6zlQm44VQePRtl73pcgAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd; fpc=AnsaasFNohZDkp5tbZUbd63yZnK2AgAAAKCBGNgOAAAA");
 
 		var urlencoded = new URLSearchParams();
