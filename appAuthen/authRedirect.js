@@ -2,6 +2,8 @@
 // configuration parameters are located at authConfig.js
 const myMSALObj = new msal.PublicClientApplication(msalConfig);
 
+
+
 let username = "";
 
 /**
@@ -52,6 +54,7 @@ function signIn() {
      */
 
     myMSALObj.loginRedirect(loginRequest);
+    console.log('auth Redirect jaaaa');
 }
 
 function signOut() {
