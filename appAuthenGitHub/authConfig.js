@@ -1,8 +1,9 @@
 // Config object to be passed to Msal on creation
 const msalConfig = {
     auth: {
-        clientId: "3fba556e-5d4a-48e3-8e1a-fd57c12cb82e",
-        authority: "https://login.windows-ppe.net/common/"
+        clientId: "8473aee7-b1fb-43ca-9078-adcf63935061",
+        authority: "https://login.windows-ppe.net/common/",
+        redirectUri: "https://searchfileapplication.web.app/appAuthenGitHub/index.html",
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored
