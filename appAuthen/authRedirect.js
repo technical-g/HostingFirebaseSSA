@@ -54,7 +54,7 @@ function signIn() {
      */
 
     myMSALObj.loginRedirect(loginRequest);
-    console.log('auth Redirect jaaaa');
+    //console.log('auth Redirect jaaaa');
 }
 
 function signOut() {
