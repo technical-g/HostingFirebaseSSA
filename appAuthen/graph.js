@@ -14,6 +14,7 @@ function callMSGraph(endpoint, token, callback) {
     };
 
     console.log('request made to Graph API at: ' + new Date().toString());
+    console.log('bearerGG ' + bearer); //Gift
 
     fetch(endpoint, options)
         .then(response => response.json())

@@ -42,6 +42,9 @@
         <br>
         <br>
         <button class="btn btn-primary" id="readMail" onclick="readMail()">Read Mails</button>
+        <br>
+        <br>
+        <button class="btn btn-primary" id="CallTestAPI" onclick="callTestAPI()">CallTestAPI</button>
       </div>
     </div>
     </div>
@@ -59,7 +62,7 @@
     <br>
     <br>
 
-    <button class="btn btn-primary" id="CallTestAPI" onclick="CallTestAPI()">CallTestAPI</button>
+
 
     <!-- importing bootstrap.js and supporting js libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -78,8 +81,43 @@
 
     <!-- GUBGIB Script Start Here -->
 
-    <!-- OneDriveAPI Test -->
-    <script type="text/javascript" src="/GGOneDriveAPI.js"></script>
+    <!-- OneDriveAPI Test 
+    <script type="text/javascript" src="/GGOneDriveAPI.js"></script> -->
+
+
+    <script type="text/javascript">
+
+      function callTestAPI(){
+
+        var myHeaders = new Headers();
+
+        /*var accessT = "Bearer " + response.accessToken;
+        console.log('accessT = ' + accessT); */
+        
+        getTokenRedirect(tokenRequest)
+          .then(response => {
+              console.log('Token from callTestAPI :: ' + response.accessToken);
+              myHeaders.append("Authorization", "Bearer " + response.accessToken);
+
+              var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+              };
+
+              fetch("https://graph.microsoft.com/v1.0/me/drive/root/search(q='test')?select=name,id,webUrl", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+          }).catch(error => {
+            console.error(error);
+          });
+
+      }
+
+
+    </script>
 
 
   </body>
