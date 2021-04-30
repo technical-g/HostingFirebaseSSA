@@ -67,29 +67,28 @@ function getuserByEmail(){
 
 }
 
-function getSharedItem(){
+/*
+This function to get file and information of shared link that inputted on screen
 
-    //LinkToTest = https://1drv.ms/f/s!AnDGcocSJpo9ijROFXg33pkOWnOm
+*/
+function getSharedItem(){
 
     var myHeaders = new Headers();
     var sharedLink = document.getElementById("SharedLinkInput").value ;  
-    var fetchedResult = [];
+    var fetchedResult;
 
-    //Encode link to base64    
+    /*  To get Final Link of API
+        - Encode link to base64    
+        - Remove if link end with =
+        - Replace / with _ and Replace + with - */
     var base64Link = window.btoa(sharedLink);
-
-    //Remove if link end with =
     if(base64Link.endsWith("=")){
         base64Link = base64Link.slice(0, -1);
     }
-
-    //Replace / with _ and Replace + with -
     var finalLink = "u!" + base64Link.replace("/", "_").replace("+","-");
 
-    console.log('Final Link : ' + finalLink);
 
-    //Start call api
-
+    //Get Token and Fetch API To get data of Shared Link!
     getTokenRedirect(tokenRequest)
       .then(response => {
           myHeaders.append("Authorization", "Bearer " + response.accessToken);
@@ -102,44 +101,35 @@ function getSharedItem(){
 
           fetch(apiPath.microsoftGraph + apiPath.getShared + finalLink + "/driveItem?$expand=children" , requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
-            .then(result => fetchedResult.appendData(result))
+            .then(result => {
+                fetchedResult = result;
+                //console.log('LOG Here :: ' + fetchedResult);
+                //console.log(typeof fetchedResult);
+                getSharedItemResult(result);
+            })
             .catch(error => console.log('error', error));
 
     }).catch(error => {
         console.error(error);
     });
-    
-
-    document.getElementById("displayValue").innerHTML = fetchedResult[0];
 
 }
 
+function getSharedItemResult(textResult){
+    //console.log('textResult!!!!!!' + textResult);
+    var obj = JSON.parse(textResult);
+    //document.getElementById("displayValue").innerHTML = obj["cTag"]; << อันนี้ใช้ได้
+    // console.log(obj["children"][0]["name"])<< อันนี้ใช้ได้
 
-/*function calOneDriveAPI(pathAccess) {
-
-    const headers = new Headers();
-    const bearer = `Bearer ${token}`;
-
-    headers.append("Authorization", bearer);
     
+    console.log(typeof obj["children"]);
+    console.log('length: ' + obj["children"].length);
 
-    var root = "https://api.onedrive.com/v1.0/drive/root:";
-    var path = "/Documents/My Files/#nine.docx";
-    var url = root + escape(path);
-
-    var token = response.accessToken;
     
+    
+    for(i=0 ; i<obj["children"].length; i++){
 
-    const options = {
-        method: "GET",
-        headers: headers
-    };
+        document.getElementById("displayValue").innerHTML += obj["children"][i]["name"] + " ";
 
-    console.log('request made to onedriveAPI at: ' + new Date().toString());
-
-    fetch(url, options)
-        .then(response => response.json())
-        //.then(response => callback(response, endpoint))
-        .catch(error => console.log(error));
-}  */
+    }
+}
