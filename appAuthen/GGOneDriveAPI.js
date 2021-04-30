@@ -103,7 +103,7 @@ function getSharedItem(){
             .then(response => response.text())
             .then(result => {
                 fetchedResult = result;
-                //console.log('LOG Here :: ' + fetchedResult);
+                //console.log('LOG Here :: ' + result);
                 //console.log(typeof fetchedResult);
                 getSharedItemResult(result);
             })
@@ -115,21 +115,37 @@ function getSharedItem(){
 
 }
 
+/*
+    This function will display value of Item from Fetch SharedFolder API
+*/
+
 function getSharedItemResult(textResult){
-    //console.log('textResult!!!!!!' + textResult);
+
     var obj = JSON.parse(textResult);
     //document.getElementById("displayValue").innerHTML = obj["cTag"]; << อันนี้ใช้ได้
-    // console.log(obj["children"][0]["name"])<< อันนี้ใช้ได้
+    // console.log(obj["children"][0]["name"])<< อันนี้ใช้ได้    
+    //onsole.log(typeof obj["children"]);
+    //console.log('length: ' + obj["children"].length);
 
-    
-    console.log(typeof obj["children"]);
-    console.log('length: ' + obj["children"].length);
-
+    const tabList = document.getElementById("list-tab");
+    tabList.innerHTML = ''; // clear tabList at each readMail call
     
     
     for(i=0 ; i<obj["children"].length; i++){
 
-        document.getElementById("displayValue").innerHTML += obj["children"][i]["name"] + " ";
+        console.log("i = " + i + " : " + obj["children"][i]["@microsoft.graph.downloadUrl"]);
+        //document.getElementById("displayValue").innerHTML += obj["children"][i]["name"] + "\n";
 
+        const listItem = document.createElement("a");
+        listItem.setAttribute("class", "list-group-item list-group-item-action")
+        listItem.setAttribute("id", "listItem" + i)
+        //listItem.setAttribute("data-toggle", "list") This line make tag a cann't go to downloadUrl
+        listItem.setAttribute("href", obj["children"][i]["@microsoft.graph.downloadUrl"])
+        listItem.setAttribute("role", "tab")
+        listItem.setAttribute("aria-controls", i)
+        listItem.innerHTML = obj["children"][i]["name"];
+        tabList.appendChild(listItem)
     }
+
 }
+
