@@ -139,8 +139,12 @@ function getSharedItemResult(textResult){
         const listItem = document.createElement("a");
         listItem.setAttribute("class", "list-group-item list-group-item-action")
         listItem.setAttribute("id", "listItem" + i)
-        //listItem.setAttribute("data-toggle", "list") This line make tag a cann't go to downloadUrl
-        listItem.setAttribute("href", obj["children"][i]["@microsoft.graph.downloadUrl"])
+        //listItem.setAttribute("data-toggle", "list") This line make tag a can't go to downloadUrl
+        if(obj["children"][i]["@microsoft.graph.downloadUrl"] == null){
+            
+        }else{
+            listItem.setAttribute("href", obj["children"][i]["@microsoft.graph.downloadUrl"])
+        }
         listItem.setAttribute("role", "tab")
         listItem.setAttribute("aria-controls", i)
         listItem.innerHTML = obj["children"][i]["name"];
